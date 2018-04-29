@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
     if @item.save
       flash[:notice] = 'Todo was created'
       redirect_to @item
@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:title, :description)
+      params.require(:item).permit(:title, :description, :user_id)
     end
 
   
