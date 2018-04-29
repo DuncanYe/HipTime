@@ -1,0 +1,6 @@
+<h1> Woop! </h1>
+<br>
+<% @items.each do |i| %>
+  <h2><%= link_to i.title, item_path(i) %></h2>
+  <p><%= i.description %></p>
+<% end %>
