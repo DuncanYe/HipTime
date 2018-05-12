@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   resources :items do
     member do
-      patch :complete
+      post :complete
+      # post :uncomplete
     end
   end
   root "items#index"
 end
+

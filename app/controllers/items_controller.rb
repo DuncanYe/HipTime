@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :find_item, only: [:show, :edit, :update, :destroy] 
 
   def index
-    @items = Item.where(:user_id => current_user.id ).order(created_at: :desc) if user_signed_in?
+    @items = Item.where(:user_id => current_user.id ).order(completed_at: :asc) if user_signed_in?
   end
 
   def new
@@ -43,9 +43,22 @@ class ItemsController < ApplicationController
 
   def complete
     @item = Item.find(params[:id])
-    @item.update_attribute(:completed_at, Time.now)
+    if @item.completed?
+       # @item.update_attribute(:completed_at, nil)
+       @item.update({completed_at: nil})
+       # 如果completed_at 有值，把質變nil
+    else
+       @item.update_attribute(:completed_at, Time.now)
+     #如果completed_at 沒有值，把Time.now加進去
+    end
     redirect_to root_path
   end
+
+  # def uncomplete
+  #   @item = Item.find(params[:id])
+  #   @item.update.attribute(:updated_at)
+  #   redirect_to root_path
+  # end
 
 
 
